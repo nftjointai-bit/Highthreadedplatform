@@ -1,0 +1,81 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
+    --font-sans: 'Inter Tight', system-ui, -apple-system, sans-serif;
+    --font-mono: 'JetBrains Mono', 'SF Mono', ui-monospace, monospace;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background-color: #F4F1EA;
+    color: #161513;
+    font-family: var(--font-sans);
+    font-feature-settings: 'ss01', 'cv01';
+  }
+
+  /* Subtle paper grain on the body — gives every page a tactile base */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.35;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.06 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+
+  ::selection {
+    background: #161513;
+    color: #F4F1EA;
+  }
+}
+
+@layer components {
+  .hairline {
+    @apply font-mono text-hairline uppercase tracking-widest-2 text-ink-mute;
+  }
+
+  .rule-t { border-top: 1px solid #D9D2C2; }
+  .rule-b { border-bottom: 1px solid #D9D2C2; }
+
+  /* "Stamp" effect — used for verified seal */
+  .stamp {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.7rem;
+    border: 1px solid currentColor;
+    border-radius: 9999px;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  .stamp::before {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 9999px;
+    background: currentColor;
+  }
+}
+
+@layer utilities {
+  /* Content always sits above the grain overlay */
+  .above-grain { position: relative; z-index: 1; }
+}
+
+/* Inline web fonts (no external loader to keep MVP simple).
+   Fraunces, Inter Tight, JetBrains Mono are loaded via <link> in layout. */
